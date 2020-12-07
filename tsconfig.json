@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "target": "es6",
+    "module": "ESNext",
+    "lib": [
+      "dom",
+      "dom.Iterable",
+      "es5",
+      "es2015.promise",
+      "es2015",
+      "es2016",
+      "es2017",
+      "es2018",
+      "es2019",
+      "es2020"
+    ],
+    "allowJs": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "importHelpers": true,
+    "outDir": "./output",
+    "strict": true,
+    "preserveSymlinks": true,
+    "esModuleInterop": true,
+    "typeRoots": ["node_modules/@types"],
+  },
+  "include": ["lib/**/*"],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/dist/**",
+    "**/static/**",
+    "**/config/**",
+    "**/*.test.ts"
+  ]
+}
