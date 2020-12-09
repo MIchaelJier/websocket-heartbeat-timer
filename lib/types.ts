@@ -1,9 +1,15 @@
+export interface userInfo {
+  [propName: string]: string
+}
+
 export interface websocketHeartbeatOpts {
   url: string
   pingTimeout: number
   pongTimeout: number
   reconnectTimeout: number
   pingMsg: string
+  manualStart: boolean
+  userInfo: userInfo
   repeatLimit?: number
 }
 

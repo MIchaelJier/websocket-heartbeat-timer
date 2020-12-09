@@ -44,9 +44,9 @@ let server = net.createServer(socket => {
           
             socket.on('data',data1 => { 
                 socket.write(encodeWsFrame({
-                    payloadData: `服务端接收到了消息 ${getNowTime()}`
-                }));
-                console.log(`服务端接收到了消息${decodeDataFrame(data1)}`)//帧
+                    payloadData: ` ${getNowTime()} | i got you | ${decodeDataFrame(data1).PayloadData} `
+                })); 
+                //帧
                 // let FIN = data1[0]&0x001//位运算
                 // let opcode=data1[0]&0xF0
             })
