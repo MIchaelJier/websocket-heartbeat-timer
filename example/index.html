@@ -33,10 +33,13 @@
 </style>
 
 <body>
-    <button onclick="connect()">connect</button>
-    <button onclick="start()">start</button>
-    <button onclick="stop()">stop</button>
-    <button onclick="closeConnect()">close connect</button>
+    <div style="position: fixed;"> 
+        <button onclick="connect()">connect</button>
+        <button onclick="connect(true)">user2 connect</button> 
+        <button onclick="start()">start</button>
+        <button onclick="stop()">stop</button>
+        <button onclick="closeConnect()">close connect</button>
+    </div>
     <div class="logs" id="logs"></div>
 
     <script src="./../dist/wsHeartbeat.min.js"></script> 
@@ -52,12 +55,16 @@
     </script>
 
     <script> 
-        function connect() {
-          websocketHeartbeatJs.createWebSocket()
-          console.log(websocketHeartbeatJs)
+        function connect(isNew) {
+            isNew && websocketHeartbeatJs.use('uuid').use('userInfo', {
+                  token: '00000', 
+                  id: '0000',
+            }) 
+            websocketHeartbeatJs.createWebSocket()
+            console.log(websocketHeartbeatJs)
         }
-        function start() {
-          websocketHeartbeatJs.start()
+        function start() { 
+            websocketHeartbeatJs.start()
         }
         function stop() {
             websocketHeartbeatJs.stop()
@@ -68,7 +75,7 @@
 
         const url = 'ws://localhost:8080/';
         let firstHeartbeat = true;
-        let websocketHeartbeatJs = new websocketHeartbeat({
+        const websocketHeartbeatJs = websocketHeartbeat({ 
             url: url,
             pingTimeout: 1000,
             pongTimeout: 1000,
@@ -77,9 +84,9 @@
             userInfo: {
                 token: '1234567',
                 id: '1234',
-                uuid: websocketHeartbeat.getUUID(),
             }
-        }); 
+        }).use('uuid')   
+       
         // hook use
         websocketHeartbeatJs.onopen = function () {
             addLog('connect success', 'cadetblue');

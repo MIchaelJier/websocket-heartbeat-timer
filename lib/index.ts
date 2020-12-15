@@ -1,18 +1,37 @@
+/* eslint-disable no-useless-constructor */
 import websocketHeartbeat from './websocketHeartbeat'
-import { websocketHeartbeatOpts } from './types'
+import { websocketHeartbeatOpts, userInfo } from './types'
 import { getUUID } from './util/index'
 
-export default class WsHeartbeat extends websocketHeartbeat {
-  static opts: websocketHeartbeatOpts
-  static getUUID(): string {
+class WsHeartbeat extends websocketHeartbeat {
+  private constructor(otps: websocketHeartbeatOpts) {
+    super(otps)
+  }
+  private static _instance: WsHeartbeat | null = null
+  public static getUUID(): string {
     return getUUID()
   }
-  static get _instance(): WsHeartbeat {
-    if (!WsHeartbeat._instance) {
-      Object.defineProperty(WsHeartbeat, '_instance', {
-        value: new WsHeartbeat(this.opts),
-      })
+
+  public static set(otps: websocketHeartbeatOpts): WsHeartbeat {
+    if (!this._instance) {
+      this._instance = new WsHeartbeat(otps)
     }
-    return WsHeartbeat._instance
+    return this._instance
+  }
+
+  public use(useType: string, info?: userInfo): WsHeartbeat | null {
+    switch (useType) {
+      case 'uuid':
+        this.uuid = getUUID()
+        return this
+      case 'userInfo':
+        Object.assign(this.opts.userInfo, info)
+        return this
+      default:
+        throw new Error(`can't find type ${useType}`)
+    }
   }
 }
+
+export default (ops: websocketHeartbeatOpts): WsHeartbeat =>
+  WsHeartbeat.set(ops)

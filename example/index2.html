@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>websocket-heartbeat-js demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<style>
+    .logs {
+        padding: 40px 0 0 40px;
+    }
+
+    .logs div {
+        line-height: 26px;
+        font-size: 16px;
+    }
+
+    .brown {
+        color: brown;
+        font-size: 14px!important;
+    }
+    .cadetblue{
+        color: cadetblue;
+    }
+    .chocolate{
+        color: chocolate;
+    }
+    .gray {
+        color: #666666;
+    }
+</style>
+
+<body>
+    <div style="position: fixed;"> 
+        <button onclick="connect()">connect</button>
+        <button onclick="connect(true)">user2 connect</button> 
+        <button onclick="start()">start</button>
+        <button onclick="stop()">stop</button>
+        <button onclick="closeConnect()">close connect</button>
+    </div>
+    <div class="logs" id="logs"></div>
+
+    <script type="model" src="./../dist/wsHeartbeat.esm.js"></script> 
+    <script>
+        const $logs = document.getElementById('logs');
+        function addLog(log, color = 'gray') {
+            let div = document.createElement('div');
+            div.textContent = log;
+            div.className = color;
+            $logs.appendChild(div);
+            window.scrollTo(0, 100000);
+        }
+    </script>
+    <script> 
+        const url = 'ws://localhost:8080/';  
+        let firstHeartbeat = true;
+        const websocketHeartbeatJs = WebsocketHeartbeat.set({
+            url: url,
+            pingTimeout: 1000,
+            pongTimeout: 1000,
+            // manualStart: true,
+            repeatLimit: 3,
+            userInfo: {
+                token: '1234567',
+                id: '1234',
+            }
+        })
+        // .use('uuid')   
+    </script>
+</body>
+
+</html>
