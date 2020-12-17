@@ -19,7 +19,7 @@ class WsHeartbeat extends websocketHeartbeat {
     return this._instance
   }
 
-  public use(useType: string, info?: userInfo): WsHeartbeat | null {
+  public useIt(useType: string, info?: userInfo): WsHeartbeat | null {
     switch (useType) {
       case 'uuid':
         this.uuid = getUUID()

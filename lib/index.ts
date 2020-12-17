@@ -1,37 +1,18 @@
 /* eslint-disable no-useless-constructor */
-/* eslint-disable no-empty-function */
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable no-undef */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable prettier/prettier */
-
-import WorkerWebsocketHeartbeat from './worker'
+import WsHeartbeat from './index_normal'
+import WwHeartbeat from './index_worker'
 import { websocketHeartbeatOpts } from './types'
 
-class WsHeartbeat extends WorkerWebsocketHeartbeat {
-  private constructor(
-    stringUrl: string | URL,
-    options?: WorkerOptions | undefined
-  ) {
-    super(stringUrl, options)
-  }
+class Ws {
+  private constructor() {}
+  private static _instance: Ws | null = null
 
-  private static _instance: WsHeartbeat | null = null
-
-  public static set(otps: websocketHeartbeatOpts): WsHeartbeat {
+  public static setOut(otps: websocketHeartbeatOpts): Ws {
     if (!this._instance) {
-      this._instance = WsHeartbeat.getWorker(this.create, otps)
+      this._instance = otps.webworker ? WwHeartbeat(otps) : WsHeartbeat(otps)
     }
     return this._instance
   }
-
 }
 
-export default (otps: websocketHeartbeatOpts): WsHeartbeat => {
-  const worker = WsHeartbeat.set(otps)
-  worker.onmessage = function (event) {
-    // eslint-disable-next-line prettier/prettier
-    (<any>worker)[event.data.name](event.data)
-  }
-  return worker
-}
+export default (otps: websocketHeartbeatOpts): Ws => Ws.setOut(otps)

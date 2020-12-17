@@ -3,8 +3,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable no-undef */
 /* eslint-disable class-methods-use-this */
-/* eslint-disable prettier/prettier */
-
 
 // import WebsocketHeartbeat from './websocketHeartbeat'
 import {
@@ -16,7 +14,11 @@ import {
 import { getUUID } from './util/index'
 
 class WorkerWebsocketHeartbeat extends Worker {
-  constructor(stringUrl: string | URL, options?: WorkerOptions | undefined, opts?: websocketHeartbeatOpts | undefined) {
+  constructor(
+    stringUrl: string | URL,
+    opts?: websocketHeartbeatOpts | undefined,
+    options?: WorkerOptions | undefined
+  ) {
     super(stringUrl, options)
     this.opts = opts
   }
@@ -39,7 +41,7 @@ class WorkerWebsocketHeartbeat extends Worker {
     const code = worker.toString()
     const blob = new Blob(['(' + code + ')(' + JSON.stringify(param) + ')'])
     // eslint-disable-next-line no-undefined
-    return new WorkerWebsocketHeartbeat(URL.createObjectURL(blob), undefined, param)
+    return new WorkerWebsocketHeartbeat(URL.createObjectURL(blob), param)
   }
 
   public static create = function (
@@ -51,7 +53,7 @@ class WorkerWebsocketHeartbeat extends Worker {
         pingTimeout: 5000,
         pongTimeout: 5000,
         reconnectTimeout: 2000,
-        pingMsg: 'test',
+        pingMsg: '',
         userInfo: {},
         manualStart: false,
       }
@@ -203,12 +205,12 @@ class WorkerWebsocketHeartbeat extends Worker {
     publicHooks.forEach((item) => {
       // eslint-disable-next-line prettier/prettier
       ws[item] = function () {
-        self.postMessage({name: item})
+        self.postMessage({ name: item })
       }
     })
 
     ws.onMessage = function (e) {
-      self.postMessage( {name: 'onMessage', data: e.data} )
+      self.postMessage({ name: 'onMessage', data: e.data })
     }
     self.addEventListener(
       'message',
@@ -260,20 +262,14 @@ class WorkerWebsocketHeartbeat extends Worker {
   }
 }
 
-const methods = [
-  'start',
-  'stop',
-  'send',
-  'close',
-  'createWebSocket',
-  'reconnect',
-]
-
-methods.forEach((cmd) => {
-  // eslint-disable-next-line prettier/prettier
-  (<any>WorkerWebsocketHeartbeat).prototype[cmd] = function (msg: any) {
-    this.postMessage({ cmd, msg })
+// eslint-disable-next-line prettier/prettier
+['start', 'stop', 'send', 'close', 'createWebSocket', 'reconnect'].forEach(
+  (cmd) => {
+    // eslint-disable-next-line prettier/prettier
+  (<any>WorkerWebsocketHeartbeat).prototype[cmd] = function (msg: string) {
+      this.postMessage({ cmd, msg })
+    }
   }
-})
+)
 
 export default WorkerWebsocketHeartbeat

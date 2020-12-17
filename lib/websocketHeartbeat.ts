@@ -31,21 +31,21 @@ class WebsocketHeartbeat {
       this.createWebSocket()
     }
   }
-  public onclose(): void {}
-  public onerror(): void {}
-  public onopen(): void {}
-  public onstart(): void {}
-  public onstop(): void {}
+  public onClose(): void {}
+  public onError(): void {}
+  public onOpen(): void {}
+  public onStart(): void {}
+  public onStop(): void {}
   // WebSocket.onmessage 属性是一个当收到来自服务器的消息时被调用的 EventHandler
-  public onmessage(event: any): void {}
-  public onreconnect(): void {}
+  public onMessage(event: any): void {}
+  public onReconnect(): void {}
 
   public start(): void {
-    this.heartStart(this.onstart)
+    this.heartStart(this.onStart)
   }
 
   public stop(): void {
-    this.heartReset(this.onstop)
+    this.heartReset(this.onStop)
   }
 
   public send(msg: string): void {
@@ -58,7 +58,7 @@ class WebsocketHeartbeat {
     if (!this.ws) return
     this._forbidReconnect = true
     this.heartReset();
-    this.onclose()
+    this.onClose()
     this.ws.close()
   }
 
@@ -83,7 +83,7 @@ class WebsocketHeartbeat {
     if (this._lockReconnect || this._forbidReconnect) return
     this._lockReconnect = true
     this._repeat++
-    this.onreconnect()
+    this.onReconnect()
     setTimeout(() => {
       this.createWebSocket()
       this._lockReconnect = false
@@ -93,21 +93,21 @@ class WebsocketHeartbeat {
   private initEventHandle(): void {
     if (!this.ws) return
     this.ws.onclose = () => {
-      this.onclose()
+      this.onClose()
       this.reconnect()
     }
     this.ws.onerror = () => {
-      this.onerror()
+      this.onError()
       this.reconnect()
     }
     this.ws.onopen = () => {
       this._repeat = 0
-      this.onopen()
+      this.onOpen()
       // 心跳检测重置
       this.heartCheck()
     }
     this.ws.onmessage = (event: any) => {
-      this.onmessage(event)
+      this.onMessage(event)
       this.heartCheck()
     }
   }

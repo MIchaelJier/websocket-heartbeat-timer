@@ -9,7 +9,7 @@ export const websocketHeartbeatOptsInit = {
   pingTimeout: 5000,
   pongTimeout: 5000,
   reconnectTimeout: 2000,
-  pingMsg: 'test',
+  pingMsg: '',
   userInfo: {},
   manualStart: false,
 }
@@ -29,6 +29,7 @@ export interface websocketHeartbeatOpts {
   manualStart: boolean
   userInfo: userInfo
   repeatLimit?: number
+  webworker?: boolean
 }
 
 // eslint-disable-next-line no-undef

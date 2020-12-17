@@ -56,7 +56,7 @@
 
     <script> 
         function connect(isNew) {
-            isNew && websocketHeartbeatJs.use('uuid').use('userInfo', {
+            isNew && websocketHeartbeatJs.useIt('uuid').useIt('userInfo', {
                   token: '00000', 
                   id: '0000',
             }) 
@@ -84,18 +84,32 @@
             userInfo: {
                 token: '1234567',
                 id: '1234',
-            }
-        }).use('uuid')   
+            },
+            webworker: true
+        }).useIt('uuid')  
+        // const websocketHeartbeatJs2 = websocketHeartbeat({ 
+        //     url: url,
+        //     pingTimeout: 2000, 
+        //     pongTimeout: 1000,
+        //     manualStart: true, 
+        //     repeatLimit: 3,
+        //     userInfo: {
+        //         token: '1234567',
+        //         id: '1234',
+        //     },
+        //     webworker: false 
+        // })
+        // console.log(websocketHeartbeatJs === websocketHeartbeatJs2) // 单例
        
         // hook use
-        websocketHeartbeatJs.onopen = function () {
+        websocketHeartbeatJs.onOpen = function () {
             addLog('connect success', 'cadetblue');
             addLog('send massage: test', 'cadetblue');
             setTimeout(() => {
                 addLog(`wait ${websocketHeartbeatJs.opts.pingTimeout} ms will hava a '${websocketHeartbeatJs.opts.pingMsg}' messages`, 'cadetblue');
             }, 1500);
         }
-        websocketHeartbeatJs.onmessage = function (e) {
+        websocketHeartbeatJs.onMessage = function (e) {
             addLog(`onmessage: ${e.data}`);
             if (e.data == websocketHeartbeatJs.opts.pingMsg && firstHeartbeat) {
                 setTimeout(() => {
@@ -104,17 +118,17 @@
                 firstHeartbeat = false;
             }
         }
-        websocketHeartbeatJs.onreconnect = function () {
+        websocketHeartbeatJs.onReconnect = function () {
             addLog(`reconnecting...`, 'brown');
             addLog(`network closing`, 'brown');
         } 
-        websocketHeartbeatJs.onclose = function () {
+        websocketHeartbeatJs.onClose = function () {
             addLog(`onclose`, 'brown'); 
         }
-        websocketHeartbeatJs.onstart = function () {
+        websocketHeartbeatJs.onStart = function () {
             addLog(`onstart`, 'brown'); 
         }
-        websocketHeartbeatJs.onstop = function () {
+        websocketHeartbeatJs.onStop = function () {
             addLog(`onstop`, 'brown'); 
         }
     </script>
