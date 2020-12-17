@@ -3,19 +3,11 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { websocketHeartbeatOpts, myWebsocket } from './types'
+import { websocketHeartbeatOpts, websocketHeartbeatOptsInit , myWebsocket } from './types'
 // import { getUUID } from './util/index'
 
 class WebsocketHeartbeat {
-  public opts: websocketHeartbeatOpts = {
-    url: '',
-    pingTimeout: 5000,
-    pongTimeout: 5000,
-    reconnectTimeout: 2000,
-    pingMsg: 'test',
-    userInfo: {},
-    manualStart: false
-  }
+  public opts: websocketHeartbeatOpts = websocketHeartbeatOptsInit
   private ws: myWebsocket = null // WebSocket
   private _repeat = 0
   // 前端发送ping消息，后端收到后，需要立刻返回pong消息
@@ -25,7 +17,7 @@ class WebsocketHeartbeat {
   private _forbidReconnect = false
   public uuid = ''
 
-  get msg():string {
+  private get msg():string {
     return JSON.stringify({
       msg: this.opts.pingMsg,
       uuid: this.uuid ,

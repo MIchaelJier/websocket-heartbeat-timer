@@ -1,16 +1,18 @@
 {
-  "name": "websocket-heartbeat-timer",
-  "version": "1.0.0",
-  "description": "websocket💓",
-  "main": "lib/websocketHeartbeat.ts",
+  "name": "@gdyfe/websocket-heartbeat-timer",
+  "version": "1.0.1",
+  "description": "💓 == msg ==>📦", 
+  "main": "dist/wsHeartbeat.esm.js",
   "repository": "https://github.com/MIchaelJier/websocket-heartbeat-timer.git",
+  "homepage": "https://github.com/MIchaelJier/websocket-heartbeat-timer.git",
   "author": "MichaelJier <chem908430737@icloud.com>",
   "license": "MIT",
   "private": false,
   "scripts": {
     "rollup": "rollup --config",
     "tsc": "tsc",
-    "example": "rollup --config && node ./example/index.js"
+    "example": "rollup --config && node ./example/index.js",
+    "publish": "npm publish --access public"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.0.0",
@@ -25,11 +27,12 @@
     "eslint-plugin-typescript": "^0.14.0",
     "prettier": "^2.1.2",
     "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^4.1.2"
-  },
-  "dependencies": {
+    "typescript": "^4.1.2",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.29.0"
+  }, 
+  "dependencies": {
+    
   }
 }

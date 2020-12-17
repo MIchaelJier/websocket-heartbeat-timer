@@ -1,6 +1,24 @@
+import WebsocketHeartbeat from './websocketHeartbeat'
+
 export interface userInfo {
   [propName: string]: string
 }
+
+export const websocketHeartbeatOptsInit = {
+  url: '',
+  pingTimeout: 5000,
+  pongTimeout: 5000,
+  reconnectTimeout: 2000,
+  pingMsg: 'test',
+  userInfo: {},
+  manualStart: false,
+}
+
+export type WebsocketHeartbeatPropName = keyof WebsocketHeartbeat
+// export type WebsocketHeartbeatPropName = [propName in keyof WebsocketHeartbeat]
+
+// let arr:Array<string> = WebsocketHeartbeat
+// export enum a =
 
 export interface websocketHeartbeatOpts {
   url: string

@@ -1,37 +1,37 @@
 /* eslint-disable no-useless-constructor */
-import websocketHeartbeat from './websocketHeartbeat'
-import { websocketHeartbeatOpts, userInfo } from './types'
-import { getUUID } from './util/index'
+/* eslint-disable no-empty-function */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable no-undef */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable prettier/prettier */
 
-class WsHeartbeat extends websocketHeartbeat {
-  private constructor(otps: websocketHeartbeatOpts) {
-    super(otps)
+import WorkerWebsocketHeartbeat from './worker'
+import { websocketHeartbeatOpts } from './types'
+
+class WsHeartbeat extends WorkerWebsocketHeartbeat {
+  private constructor(
+    stringUrl: string | URL,
+    options?: WorkerOptions | undefined
+  ) {
+    super(stringUrl, options)
   }
+
   private static _instance: WsHeartbeat | null = null
-  public static getUUID(): string {
-    return getUUID()
-  }
 
   public static set(otps: websocketHeartbeatOpts): WsHeartbeat {
     if (!this._instance) {
-      this._instance = new WsHeartbeat(otps)
+      this._instance = WsHeartbeat.getWorker(this.create, otps)
     }
     return this._instance
   }
 
-  public use(useType: string, info?: userInfo): WsHeartbeat | null {
-    switch (useType) {
-      case 'uuid':
-        this.uuid = getUUID()
-        return this
-      case 'userInfo':
-        Object.assign(this.opts.userInfo, info)
-        return this
-      default:
-        throw new Error(`can't find type ${useType}`)
-    }
-  }
 }
 
-export default (ops: websocketHeartbeatOpts): WsHeartbeat =>
-  WsHeartbeat.set(ops)
+export default (otps: websocketHeartbeatOpts): WsHeartbeat => {
+  const worker = WsHeartbeat.set(otps)
+  worker.onmessage = function (event) {
+    // eslint-disable-next-line prettier/prettier
+    (<any>worker)[event.data.name](event.data)
+  }
+  return worker
+}
