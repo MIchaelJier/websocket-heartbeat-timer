@@ -12,7 +12,7 @@ export default {
       file: 'dist/wsHeartbeat.min.js',
       format: 'iife', // umd cjs es iife
       exports: 'auto',
-      sourcemap: true,
+      // sourcemap: true,
       plugins: [
         terser({
           compress: {

@@ -1,7 +1,7 @@
 {
   "name": "@gdyfe/websocket-heartbeat-timer",
   "version": "1.0.1",
-  "description": "💓 == msg ==>📦",
+  "description": "💓== msg ==>📦", 
   "main": "dist/wsHeartbeat.esm.js",
   "repository": "https://github.com/MIchaelJier/websocket-heartbeat-timer.git",
   "homepage": "https://github.com/MIchaelJier/websocket-heartbeat-timer.git",

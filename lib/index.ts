@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor */
-import WsHeartbeat from './index_normal'
-import WwHeartbeat from './index_worker'
+import WsHeartbeat from './normal'
+import WwHeartbeat from './worker'
 import { websocketHeartbeatOpts } from './types'
 
 class Ws {
