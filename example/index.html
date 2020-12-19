@@ -56,7 +56,7 @@
 
     <script> 
         function connect(isNew) {
-            isNew && websocketHeartbeatJs.useIt('uuid').useIt('userInfo', {
+            isNew && websocketHeartbeatJs.useIt('uuid').useIt('ua').useIt('userInfo', {
                   token: '00000', 
                   id: '0000',
             }) 
@@ -86,7 +86,7 @@
                 id: '1234',
             },
             webworker: true
-        }).useIt('uuid')  
+        }).useIt('uuid').useIt('ua')  
         // const websocketHeartbeatJs2 = websocketHeartbeat({ 
         //     url: url,
         //     pingTimeout: 2000, 

@@ -51,8 +51,8 @@ websocketHeartbeat({
  websocketHeartbeatJs.onStop = function () { // 停止 }
 
 // useIt()
- websocketHeartbeatJs.useIt('uuid').useIt('userInfo', {
-  token: 'xxxx', 
+ websocketHeartbeatJs.useIt('uuid').useIt('ua').useIt('userInfo', {
+  token: 'xxxx',  
   id: 'xxxx',
  }) 
 ```

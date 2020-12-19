@@ -1,9 +1,11 @@
-/* eslint-disable no-useless-constructor */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable no-empty-function */
 import WsHeartbeat from './normal'
 import WwHeartbeat from './worker'
 import { websocketHeartbeatOpts } from './types'
 
 class Ws {
+  // eslint-disable-next-line no-useless-constructor
   private constructor() {}
   private static _instance: Ws | null = null
 

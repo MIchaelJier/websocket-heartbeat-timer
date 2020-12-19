@@ -65,11 +65,13 @@ class WorkerWebsocketHeartbeat extends Worker {
       private _lockReconnect = false
       private _forbidReconnect = false
       public uuid = ''
+      public ua = ''
 
       private get msg(): string {
         return JSON.stringify({
           msg: this.opts.pingMsg,
           uuid: this.uuid,
+          ua: this.ua,
           ...this.opts.userInfo,
         })
       }
@@ -100,7 +102,12 @@ class WorkerWebsocketHeartbeat extends Worker {
       public send(msg: string): void {
         if (!this.ws) return
         this.ws.send(
-          JSON.stringify({ msg, uuid: this.uuid, ...this.opts.userInfo })
+          JSON.stringify({
+            msg,
+            uuid: this.uuid,
+            ua: this.ua,
+            ...this.opts.userInfo,
+          })
         )
       }
 
@@ -192,7 +199,7 @@ class WorkerWebsocketHeartbeat extends Worker {
     type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
     type WebsocketHeartbeatPropName = keyof Omit<
       WebsocketHeartbeat,
-      'opts' | 'uuid'
+      'opts' | 'uuid' | 'ua'
     >
     const publicHooks: Array<WebsocketHeartbeatPropName> = [
       'onClose',
@@ -230,6 +237,9 @@ class WorkerWebsocketHeartbeat extends Worker {
           case 'uuid':
             ws.uuid = msg
             break
+          case 'ua':
+            ws.ua = msg
+            break
           case 'userInfo':
             // ws.opts.userInfo =
             Object.assign(ws.opts.userInfo, msg)
@@ -251,6 +261,12 @@ class WorkerWebsocketHeartbeat extends Worker {
         this.postMessage({
           cmd: 'uuid',
           msg: getUUID(),
+        })
+        return this
+      case 'ua':
+        this.postMessage({
+          cmd: 'ua',
+          msg: navigator ? navigator.userAgent || '' : '',
         })
         return this
       case 'userInfo':

@@ -24,6 +24,10 @@ class WsHeartbeat extends websocketHeartbeat {
       case 'uuid':
         this.uuid = getUUID()
         return this
+      case 'ua':
+        // eslint-disable-next-line no-undef
+        this.ua = navigator ? navigator.userAgent || '' : ''
+        return this
       case 'userInfo':
         Object.assign(this.opts.userInfo, info)
         return this

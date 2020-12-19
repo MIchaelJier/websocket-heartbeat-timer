@@ -16,11 +16,13 @@ class WebsocketHeartbeat {
   private _lockReconnect = false
   private _forbidReconnect = false
   public uuid = ''
+  public ua = ''
 
   private get msg():string {
     return JSON.stringify({
       msg: this.opts.pingMsg,
       uuid: this.uuid ,
+      ua: this.ua,
       ...this.opts.userInfo
     })
   }
@@ -50,7 +52,7 @@ class WebsocketHeartbeat {
 
   public send(msg: string): void {
     if (!this.ws) return
-    this.ws.send(JSON.stringify({msg, uuid: this.uuid ,...this.opts.userInfo}))
+    this.ws.send(JSON.stringify({msg, uuid: this.uuid, ua: this.ua, ...this.opts.userInfo}))
   }
 
   public close(): void {
