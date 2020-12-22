@@ -3563,6 +3563,13 @@ rollup-pluginutils@^2.8.1:
   dependencies:
     estree-walker "^0.6.1"
 
+rollup@^2.35.1:
+  version "2.35.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.35.1.tgz#e6bc8d10893556a638066f89e8c97f422d03968c"
+  integrity sha512-q5KxEyWpprAIcainhVy6HfRttD9kutQpHbeqDTWnqAFNJotiojetK6uqmcydNMymBEtC4I8bCYR+J3mTMqeaUA==
+  optionalDependencies:
+    fsevents "~2.1.2"
+
 run-async@^2.4.0:
   version "2.4.1"
   resolved "https://registry.npm.taobao.org/run-async/download/run-async-2.4.1.tgz#8440eccf99ea3e70bd409d49aab88e10c189a455"

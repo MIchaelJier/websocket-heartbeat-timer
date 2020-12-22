@@ -1,10 +1,11 @@
 // rollup.config.js
+import { liveServer } from 'rollup-plugin-live-server'
 import typescript from 'rollup-plugin-typescript2'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import babel from '@rollup/plugin-babel'
-// import workerLoader from 'rollup-plugin-web-worker-loader'
+import workerLoader from 'rollup-plugin-web-worker-loader'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
@@ -26,7 +27,7 @@ export default {
       format: 'iife', // umd cjs es iife
       exports: 'auto',
       // sourcemap: true,
-      // plugins,
+      plugins,
     },
     {
       name: 'websocketHeartbeat',
@@ -38,7 +39,7 @@ export default {
       name: 'websocketHeartbeat',
       file: 'dist/wsHeartbeat.esm.js',
       format: 'esm',
-      // plugins,
+      plugins,
     },
     {
       name: 'websocketHeartbeat',
@@ -52,7 +53,7 @@ export default {
     commonjs({
       include: 'node_modules/**',
     }),
-    // workerLoader(),
+    workerLoader(),
     typescript({
       tsconfig: 'tsconfig.json',
     }),
@@ -60,5 +61,14 @@ export default {
       exclude: 'node_modules/**',
       extensions,
     }),
+    // liveServer({
+    //   port: 8090,
+    //   host: '0.0.0.0',
+    //   root: 'example',
+    //   file: 'index.html',
+    //   mount: [['/dist/wsHeartbeat.min.js', './dist/wsHeartbeat.min.js']],
+    //   open: false,
+    //   wait: 500,
+    // }),
   ],
 }

@@ -35,7 +35,7 @@
   "include": ["lib/**/*"],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts",
+    "**/*.spec.ts", 
     "**/dist/**",
     "**/static/**",
     "**/config/**",

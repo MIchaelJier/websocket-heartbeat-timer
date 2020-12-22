@@ -8,18 +8,15 @@ import WorkerWebsocketHeartbeat from './workerWebsocketHeartbeat'
 import { websocketHeartbeatOpts } from './types'
 
 class WsHeartbeat extends WorkerWebsocketHeartbeat {
-  private constructor(
-    stringUrl: string | URL,
-    options?: websocketHeartbeatOpts | undefined
-  ) {
-    super(stringUrl, options)
+  private constructor(otps: websocketHeartbeatOpts) {
+    super(otps)
   }
 
   private static _instance: WsHeartbeat | null = null
 
   public static set(otps: websocketHeartbeatOpts): WsHeartbeat {
     if (!this._instance) {
-      this._instance = WsHeartbeat.getWorker(this.create, otps)
+      this._instance = new WsHeartbeat(otps)
     }
     return this._instance
   }
