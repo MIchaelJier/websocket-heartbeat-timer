@@ -35,7 +35,7 @@ websocketHeartbeat({
 |manualStart   |  number  |  false  |  false  |  是否手动开启  |
 |repeatLimit   |  number  |  false  |  unlimited      |  重连次数限制  |
 |userInfo      |  number  |  false  |  {}     |  userInfo用户信息，{ token: 'xxxxx', id: 'xxxxx', ... } |
-|webworker     |  number  |  false  |  false  |  是否开启webworker  |
+|webworker     |  number  |  false  |  false  |  （beta）是否开启webworker  |
 
 ## hook function and event function
 ```javascript

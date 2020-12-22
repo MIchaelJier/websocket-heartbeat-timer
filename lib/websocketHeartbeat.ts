@@ -23,6 +23,7 @@ class WebsocketHeartbeat {
       msg: this.opts.pingMsg,
       uuid: this.uuid ,
       ua: this.ua,
+      time: ~~(new Date().getTime() / 1000),
       ...this.opts.userInfo
     })
   }
@@ -52,7 +53,7 @@ class WebsocketHeartbeat {
 
   public send(msg: string): void {
     if (!this.ws) return
-    this.ws.send(JSON.stringify({msg, uuid: this.uuid, ua: this.ua, ...this.opts.userInfo}))
+    this.ws.send(JSON.stringify({msg, uuid: this.uuid, ua: this.ua, time: ~~(new Date().getTime() / 1000), ...this.opts.userInfo}))
   }
 
   public close(): void {

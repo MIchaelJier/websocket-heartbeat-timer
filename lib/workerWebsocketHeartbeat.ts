@@ -3,8 +3,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable no-undef */
 /* eslint-disable class-methods-use-this */
-
-// import WebsocketHeartbeat from './websocketHeartbeat'
 import {
   websocketHeartbeatOpts,
   websocketHeartbeatOptsInit,
@@ -72,6 +70,7 @@ class WorkerWebsocketHeartbeat extends Worker {
           msg: this.opts.pingMsg,
           uuid: this.uuid,
           ua: this.ua,
+          time: ~~(new Date().getTime() / 1000),
           ...this.opts.userInfo,
         })
       }
@@ -106,6 +105,7 @@ class WorkerWebsocketHeartbeat extends Worker {
             msg,
             uuid: this.uuid,
             ua: this.ua,
+            time: ~~(new Date().getTime() / 1000),
             ...this.opts.userInfo,
           })
         )
@@ -211,7 +211,7 @@ class WorkerWebsocketHeartbeat extends Worker {
     ]
     publicHooks.forEach((item) => {
       // eslint-disable-next-line prettier/prettier
-      ws[item] = function () {
+        ws[item] = function () {
         self.postMessage({ name: item })
       }
     })
@@ -232,7 +232,7 @@ class WorkerWebsocketHeartbeat extends Worker {
           case 'createWebSocket':
           case 'reconnect':
             // eslint-disable-next-line prettier/prettier
-            ws[cmd as WebsocketHeartbeatPropName](msg)
+                    ws[cmd as WebsocketHeartbeatPropName](msg);
             break
           case 'uuid':
             ws.uuid = msg
@@ -282,7 +282,7 @@ class WorkerWebsocketHeartbeat extends Worker {
 ['start', 'stop', 'send', 'close', 'createWebSocket', 'reconnect'].forEach(
   (cmd) => {
     // eslint-disable-next-line prettier/prettier
-  (<any>WorkerWebsocketHeartbeat).prototype[cmd] = function (msg: string) {
+        (<any>WorkerWebsocketHeartbeat).prototype[cmd] = function (msg: string) {
       this.postMessage({ cmd, msg })
     }
   }

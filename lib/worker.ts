@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable no-undef */
 /* eslint-disable class-methods-use-this */
-/* eslint-disable prettier/prettier */
 
 import WorkerWebsocketHeartbeat from './workerWebsocketHeartbeat'
 import { websocketHeartbeatOpts } from './types'
@@ -24,7 +23,6 @@ class WsHeartbeat extends WorkerWebsocketHeartbeat {
     }
     return this._instance
   }
-
 }
 
 export default (otps: websocketHeartbeatOpts): WsHeartbeat => {
