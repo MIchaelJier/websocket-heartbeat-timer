@@ -121,7 +121,9 @@ class WebsocketHeartbeat {
     this.ws && !this._forbidReconnect && fn()
     this._pingTimeoutId = setTimeout(() => {
       if (!this.ws) return
-      this.ws.send(this.msg)
+      if (this.ws.readyState === 1) {
+        this.ws.send(this.msg)
+      }
       this._pongTimeoutId = setTimeout(() => {
         if (!this.ws) return
         this.ws.close()
